@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+		<title>Project using Spring Data JPA, Thymeleaf and Mockito - Hai Vu</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<div th:fragment="resultsList" th:unless="${#lists.isEmpty(listUser)}" class="results-block">
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>User name</th>
+					<th>Password</th>
+					<th>Full name</th>
+					<th>Date of birth</th>
+					<th>Email</th>
+					<th>Status</th>
+				</tr>
+				<tr th:each="user : ${listUser}">
+					<td th:text="${user.userId}">userId</td>
+					<td th:text="${user.userName}">userName</td>
+					<td th:text="${user.pwd}">pwd</td>
+					<td th:text="${user.fullName}">fullName</td>
+					<td th:text="${user.dateOfBirth}">dateOfBirth</td>
+					<td th:text="${user.email}">email</td>
+					<td th:text="${user.status}">status</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
