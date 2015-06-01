@@ -24,6 +24,7 @@ public class UserController {
 	public String getListUser(ModelMap model) {
 		List<User> listUser = userSv.getAllUser();
 		model.put("listUser", listUser);
+		model.put("i", 1);
 		return "list-user :: resultsList";
 	}
 

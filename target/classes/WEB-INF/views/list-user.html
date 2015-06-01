@@ -11,6 +11,7 @@
 		<div th:fragment="resultsList" th:unless="${#lists.isEmpty(listUser)}" class="results-block">
 			<table>
 				<tr>
+					<th></th>
 					<th>ID</th>
 					<th>User name</th>
 					<th>Password</th>
@@ -20,6 +21,7 @@
 					<th>Status</th>
 				</tr>
 				<tr th:each="user : ${listUser}">
+					<td th:text="${i++}"></td>
 					<td th:text="${user.userId}">userId</td>
 					<td th:text="${user.userName}">userName</td>
 					<td th:text="${user.pwd}">pwd</td>

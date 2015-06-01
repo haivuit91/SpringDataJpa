@@ -1,9 +1,11 @@
 package com.haivu.spring.jpa.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +49,7 @@ public class User {
 	private String email;
 
 	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
 	private StatusUser status;
 
 	public User() {
@@ -54,13 +57,13 @@ public class User {
 	}
 
 	public User(int userId, String userName, String pwd, String fullName,
-			Date dateOfBirth, String email, StatusUser status) {
+			java.util.Date date, String email, StatusUser status) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.pwd = pwd;
 		this.fullName = fullName;
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirth = date;
 		this.email = email;
 		this.status = status;
 	}
