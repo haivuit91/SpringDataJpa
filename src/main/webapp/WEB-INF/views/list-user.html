@@ -23,7 +23,7 @@
 							<th>Status</th>
 							<th>Action</th>
 						</tr>
-						<tr th:each="user : ${page.content}">
+						<tr th:each="user : ${listUser.content}">
 							<td th:text="${user.userId}">userId</td>
 							<td th:text="${user.userName}">userName</td>
 							<td th:text="${user.pwd}">pwd</td>
@@ -38,65 +38,30 @@
 						</tr>
 					</table>
 					<!-- Pagination Bar -->
-					
-					
 					<nav>
 					  	<ul class="pagination">
-						    <li>
-								<a href="#" aria-label="Previous">
+						    <li th:class="${currentIndex == 1} ? 'disabled' : ''">
+						    	<a href="#" th:if="${currentIndex == 1}" aria-label="Previous">
+							    	<span aria-hidden="true">&laquo;</span>
+							    </a>
+							    <a href="#" th:unless="${currentIndex == 1}" th:href="@{/user/list(page=${currentIndex - 1})}" aria-label="Previous">
 							    	<span aria-hidden="true">&laquo;</span>
 							    </a>
 						    </li>
 						    <li th:each="i : ${#numbers.sequence(beginIndex, endIndex)}">
-						    	<a href="#" th:href="@{'/user/list?page=' + ${i}}" th:text="${i}"></a>
+						    	<a href="#" th:if="${currentIndex == i}" class="active" th:text="${i}"></a>
+						    	<a href="#" th:unless="${currentIndex == i}" th:href="@{/user/list(page=${i})}" th:text="${i}"></a>
 						    </li>
-						    <li>
-						      <a href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
+						    <li th:class="${currentIndex == listUser.totalPages} ? 'disabled' : ''">
+						      	<a href="#" th:if="${currentIndex == listUser.totalPages}" aria-label="Next">
+						        	<span aria-hidden="true">&raquo;</span>
+						      	</a>
+						      	<a href="#" th:unless="${currentIndex == listUser.totalPages}" th:href="@{/user/list(page=${currentIndex + 1})}" aria-label="Next">
+						        	<span aria-hidden="true">&raquo;</span>
+						      	</a>
 						    </li>
 					  	</ul>
 					</nav>
-					
-					
-					<!-- 
-					<div class="pagination">
-					    <ul>
-					        <c:choose>
-					            <c:when test="${currentIndex == 1}">
-					                <li class="disabled"><a href="#">&lt;&lt;</a></li>
-					                <li class="disabled"><a href="#">&lt;</a></li>
-					            </c:when>
-					            <c:otherwise>
-					                <li><a href="${firstUrl}">&lt;&lt;</a></li>
-					                <li><a href="${prevUrl}">&lt;</a></li>
-					            </c:otherwise>
-					        </c:choose>
-					        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-					            <c:url var="pageUrl" value="/pages/${i}" />
-					            <c:choose>
-					                <c:when test="${i == currentIndex}">
-					                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-					                </c:when>
-					                <c:otherwise>
-					                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-					                </c:otherwise>
-					            </c:choose>
-					        </c:forEach>
-					        <c:choose>
-					            <c:when test="${currentIndex == deploymentLog.totalPages}">
-					                <li class="disabled"><a href="#">&gt;</a></li>
-					                <li class="disabled"><a href="#">&gt;&gt;</a></li>
-					            </c:when>
-					            <c:otherwise>
-					                <li><a href="${nextUrl}">&gt;</a></li>
-					                <li><a href="${lastUrl}">&gt;&gt;</a></li>
-					            </c:otherwise>
-					        </c:choose>
-					    </ul>
-					</div>
-					 -->
-					 
 				</div>
 			</div>
 			<div class="page-header">

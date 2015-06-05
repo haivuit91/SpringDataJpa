@@ -71,7 +71,7 @@ public class UserController {
 		int begin = Math.max(1, current - 5);
 		int end = Math.min(begin + 10, userPage.getTotalPages());
 
-		model.put("page", userPage);
+		model.put("listUser", userPage);
 		model.put("beginIndex", begin);
 		model.put("endIndex", end);
 		model.put("currentIndex", current);

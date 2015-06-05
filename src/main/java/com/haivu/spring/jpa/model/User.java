@@ -41,7 +41,6 @@ public class User {
 	private String fullName;
 
 	@Column(name = "dateOfBirth")
-	@Pattern(regexp = "/^([0-9]{2})/([0-9]{2})/([0-9]{4})$/", message = "The input is not a valid dated")
 	private Date dateOfBirth;
 
 	@Column(name = "email", length = 100)
