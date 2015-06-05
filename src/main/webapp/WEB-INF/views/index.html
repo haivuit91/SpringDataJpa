@@ -4,10 +4,23 @@
 	xmlns:th="http://www.thymeleaf.org" lang="en">
 
 	<head>
-		<title>Project using Spring Data JPA, Thymeleaf and Mockito - Hai Vu</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 	<body>
-		<a href="user/list">List user</a>
+		<div class="row" th:fragment="content">
+	        <div class="col-md-12">
+				<div class="jumbotron">
+					<h2>Spring Framework</h2>
+					<p class="lead">Spring Data JPA, Thymeleaf and Mockito</p>
+				</div>
+		
+				<div class="row">
+					<div class="col-md-12">
+						<p>
+							<a href="user/list">Go to user list &raquo;</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

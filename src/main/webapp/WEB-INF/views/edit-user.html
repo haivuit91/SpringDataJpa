@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+	</head>
+	<body>
+		<div th:fragment="content">
+			<div class="page-header">
+				<h3>Edit user</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form id="form-user" class="form-horizontal" th:action="@{/user/save-user}" th:object="${user}" method="post">
+						<input id="userId" type="hidden" th:field="*{userId}" />
+						<div class="form-group">
+							<label class="col-lg-3 control-label">User name</label>
+							<div class="col-lg-5">
+								<input id="userName" class="form-control disable" readonly="readonly" type="text" th:field="*{userName}" required="required" placeholder="User name" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error</div>
+							</div>
+						</div>
+						<input id="pwd" type="hidden" th:field="*{pwd}" />
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Full name</label>
+							<div class="col-lg-5">
+								<input id="fullName" class="form-control" type="text" th:field="*{fullName}" placeholder="Full name" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Date of birth</label>
+							<div class="col-lg-5">
+								<input id="dateOfBirth" class="form-control" type="text" th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Email</label>
+							<div class="col-lg-5">
+								<input id="email" class="form-control disable" readonly="readonly" type="text" th:field="*{email}" required="required" placeholder="Email" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+							</div>
+						</div>
+						<input id="status" type="hidden" th:value="ENABLE" />
+						<div class="form-group">
+							<div class="col-lg-9 col-lg-offset-3">
+								<input class="btn btn-primary" type="submit" value="Save" name="Save" />
+								<input class="btn btn-default" type="reset" value="Reset" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

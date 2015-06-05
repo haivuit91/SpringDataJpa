@@ -19,7 +19,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
 import com.haivu.spring.jpa.model.User;
-import com.haivu.spring.jpa.model.User.StatusUser;
 import com.haivu.spring.jpa.repository.UserRepository;
 import com.haivu.spring.jpa.service.impl.UserServiceImpl;
 
@@ -31,34 +30,49 @@ public class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;
-	
-	List<User> users = new ArrayList<User>();
-	
-    @Before
-	public void setUp(){
+
+	private Map<Integer, User> userMap = new HashMap<Integer, User>();
+
+	private Map<Integer, User> createUserMap(int length) {
+		Map<Integer, User> quesMap = new HashMap<Integer, User>();
+		for (int i = 0; i < length; i++) {
+			User question = createUser(i, "User Name" + i, "Password" + i,
+					"Full Name" + i, new Date(), "Email" + i,
+					User.StatusUser.ENABLE);
+			quesMap.put(i, question);
+		}
+		return quesMap;
+	}
+
+	private User createUser(int userId, String userName, String pwd,
+			String fullName, Date dateOfBirth, String email,
+			User.StatusUser status) {
+		User user = new User(userId, userName, pwd, fullName, dateOfBirth,
+				email, status);
+		return user;
+	}
+
+	@Before
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		Mockito.when(userService.getAllUser()).thenAnswer(new Answer<List<User>>() {
-            public List<User> answer(InvocationOnMock invocation)
-                    throws Throwable {
-            	List<User> users = new ArrayList<User>();
-                for (int i = 0; i < 5; i++) {
-                    users.add(new User(1, "haivuit", "123456", "Hai Vu", new Date(), "haivu@gmail", StatusUser.ENABLE));
-                }
-                return users;
-            }
-        });
+		userMap = createUserMap(10);
+		Mockito.when(userRepository.findAll()).thenAnswer(
+				new Answer<List<User>>() {
+					public List<User> answer(InvocationOnMock invocation)
+							throws Throwable {
+						List<User> listUser = new ArrayList<User>();
+						for (int i = 0; i < userMap.size(); i++) {
+							listUser.add(userMap.get(i));
+						}
+						return listUser;
+					}
+				});
 	}
 
 	@Test
 	public void getAllUserTest() {
 		List<User> list = userService.getAllUser();
-        Assert.assertTrue(list.size() == 1);
-	}
-	
-	@Test
-	public void addUserTest() {
-		User user = new User();
-		Mockito.when(userService.addNewUser(user)).thenReturn(null);
+		Assert.assertTrue(list.size() == 10);
 	}
 
 }

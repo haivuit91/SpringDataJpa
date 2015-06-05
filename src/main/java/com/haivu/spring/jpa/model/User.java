@@ -33,7 +33,7 @@ public class User {
 	private String userName;
 
 	@Column(name = "pwd", length = 100)
-	@Size(min = 6, max = 30, message = "The user name must be more than 6 and less than 30 characters long")
+	@Size(min = 6, max = 30, message = "The password must be more than 6 and less than 30 characters long")
 	private String pwd;
 
 	@Column(name = "fullName", length = 100)
@@ -41,6 +41,7 @@ public class User {
 	private String fullName;
 
 	@Column(name = "dateOfBirth")
+	@Pattern(regexp = "/^([0-9]{2})/([0-9]{2})/([0-9]{4})$/", message = "The input is not a valid dated")
 	private Date dateOfBirth;
 
 	@Column(name = "email", length = 100)
@@ -48,7 +49,7 @@ public class User {
 	@Pattern(regexp = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message = "The input is not a valid email address")
 	private String email;
 
-	@Column(name = "status")
+	@Column(name = "status", length = 50)
 	@Enumerated(EnumType.STRING)
 	private StatusUser status;
 

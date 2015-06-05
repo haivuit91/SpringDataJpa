@@ -10,7 +10,8 @@ public class NavigationController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(ModelMap model) {
-		return "index";
+		model.put("views", "index");
+		return "common";
 	}
 
 }

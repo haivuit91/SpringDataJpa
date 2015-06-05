@@ -4,33 +4,186 @@
 	xmlns:th="http://www.thymeleaf.org" lang="en">
 
 	<head>
-		<title>Project using Spring Data JPA, Thymeleaf and Mockito - Hai Vu</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 	<body>
-		<div th:fragment="resultsList" th:unless="${#lists.isEmpty(listUser)}" class="results-block">
-			<table>
-				<tr>
-					<th></th>
-					<th>ID</th>
-					<th>User name</th>
-					<th>Password</th>
-					<th>Full name</th>
-					<th>Date of birth</th>
-					<th>Email</th>
-					<th>Status</th>
-				</tr>
-				<tr th:each="user : ${listUser}">
-					<td th:text="${i++}"></td>
-					<td th:text="${user.userId}">userId</td>
-					<td th:text="${user.userName}">userName</td>
-					<td th:text="${user.pwd}">pwd</td>
-					<td th:text="${user.fullName}">fullName</td>
-					<td th:text="${user.dateOfBirth}">dateOfBirth</td>
-					<td th:text="${user.email}">email</td>
-					<td th:text="${user.status}">status</td>
-				</tr>
-			</table>
+		<div th:fragment="content">
+			<div class="page-header">
+	        	<h1>User list</h1>
+	      	</div>
+			<div class="row">
+		        <div class="col-md-12">
+					<table id="table_user" class="table table-bordered">
+						<tr>
+							<th>ID</th>
+							<th>User name</th>
+							<th>Password</th>
+							<th>Full name</th>
+							<th>Date of birth</th>
+							<th>Email</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+						<tr th:each="user : ${page.content}">
+							<td th:text="${user.userId}">userId</td>
+							<td th:text="${user.userName}">userName</td>
+							<td th:text="${user.pwd}">pwd</td>
+							<td th:text="${user.fullName}">fullName</td>
+							<td th:text="${user.dateOfBirth}">dateOfBirth</td>
+							<td th:text="${user.email}">email</td>
+							<td th:text="${user.status}">status</td>
+							<td>
+								<a class="btn btn-success" role="button" href="#" th:href="@{'/user/edit-user/' + ${user.userId}}">Edit</a>
+								<button class="btn btn-danger delConfirm" th:attr="data-text='Are you sure you want to delete user ' + ${user.userName} + '?', data-id=${user.userId}">Delete</button>
+							</td>
+						</tr>
+					</table>
+					<!-- Pagination Bar -->
+					<!--
+					<nav>
+						<ul class="pagination">
+							<div th:switch="${page.getPageNumber}"> 
+								<p th:case="1">
+									<li class="disabled"><a href="" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+								</p>
+								<p th:case="*">
+									<li>
+										<a href="/user/users-list?page=${currentPage - 1}"
+										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+								</p> 
+							</div>
+							<c:forEach begin="1" end="${pageSize}" var="i">
+								<c:choose>
+									<c:when test="${currentPage eq i}">
+										<li class="active"><a href="">${i}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a
+											href="${pageContext.request.contextPath}/user/users-list?page=${i}">${i}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<div th:each="user : ${page.content}">
+							
+							</div>
+							<div th:switch="${page.getPageNumber} lt ${page.getPageSize} ? ${true} : ${false}"> 
+								<p th:case="${true}">
+									<li><a
+										href="/user/users-list?page=${currentPage + 1}"
+										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+									</a></li>
+								</p>
+								<p th:case="*">
+									<li class="disabled"><a href="" aria-label="Next"><span
+											aria-hidden="true">&raquo;</span></a></li>
+								</p> 
+							</div>
+						</ul>
+					</nav>
+					-->
+				</div>
+			</div>
+			<div class="page-header">
+	        	<h4>Add user</h4>
+	      	</div>
+			<div class="row">
+		        <div class="col-md-12">
+					<form id="form-user" class="form-horizontal" th:action="@{/user/save-user}" th:object="${user}" method="post">
+						<input id="userId" type="hidden" th:field="*{userId}" />
+						<div class="form-group">
+							<label class="col-lg-3 control-label">User name</label>
+							<div class="col-lg-5">
+								<input id="userName" class="form-control" type="text" th:field="*{userName}" required="required" placeholder="User name" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Password</label>
+							<div class="col-lg-5">
+								<input id="pwd" class="form-control" type="password" th:field="*{pwd}" required="required" placeholder="Password" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Full name</label>
+							<div class="col-lg-5">
+								<input id="fullName" class="form-control" type="text" th:field="*{fullName}" placeholder="Full name" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Date of birth</label>
+							<div class="col-lg-5">
+								<input id="dateOfBirth" class="form-control" type="text" th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Email</label>
+							<div class="col-lg-5">
+								<input id="email" class="form-control" type="text" th:field="*{email}" required="required" placeholder="Email" />
+								<div class="errorcolor" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+							</div>
+						</div>
+						<input id="status" type="hidden" th:field="*{status}" value="ENABLE" />
+						<div class="form-group">
+							<div class="col-lg-9 col-lg-offset-3">
+								<input class="btn btn-primary" type="submit" value="Add user" name="Save" />
+								<input class="btn btn-default" type="reset" value="Reset" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+				$(".delConfirm")
+						.confirm(
+								{
+									confirm : function(button) {
+										var userId = $(button).data("id");
+										$.ajax({
+											type : 'DELETE',
+											url : 'SpringDataJpa/user/del-user/' + userId,
+// 											data: {userId: userId},
+											success : function(response) {
+												alert(response);
+												location.reload();
+											},
+											error : function(e) {
+												alert('Error: ' + e);
+											}
+										});
+									},
+									cancel : function(button) {
+										return false;
+									},
+									confirmButton : "Yes",
+									cancelButton : "No",
+									post : true
+								});
+				$('table td input.status:checkbox')
+						.click(
+								function() {
+									var that = this;
+									var check = this.checked;
+									var userId = $(this).val();
+									$
+											.ajax({
+												type : 'POST',
+												url : '${pageContext.request.contextPath}/user/update-status/'
+														+ userId + '/' + check,
+												success : function(response) {
+													alert(response);
+												},
+												error : function(e) {
+													$(that).prop('checked', false);
+													alert('Error: ' + e);
+												}
+											});
+								});
+			</script>
 		</div>
 	</body>
 </html>

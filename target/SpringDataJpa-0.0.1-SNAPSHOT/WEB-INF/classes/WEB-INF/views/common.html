@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+		<title>Project using Spring Data JPA, Thymeleaf and Mockito - Hai Vu</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
+		
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap-switch.css" th:href="@{/resources/css/bootstrap-switch.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/bootstrapValidator/css/bootstrapValidator.css" th:href="@{/resources/bootstrapValidator/css/bootstrapValidator.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" th:href="@{/resources/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" />
+		
+		<script type="text/javascript" src="../../resources/js/jquery-1.9.1.min.js" th:src="@{/resources/js/jquery-1.9.1.min.js}"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.confirm.js" th:src="@{/resources/js/jquery.confirm.js}"></script>
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top" th:replace="template/header :: header">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">Spring MVC</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<form class="navbar-form navbar-right">
+						<div class="form-group">
+							<input type="text" placeholder="Email" class="form-control" />
+						</div>
+						<div class="form-group">
+							<input type="password" placeholder="Password" class="form-control" />
+						</div>
+						<button type="submit" class="btn btn-success">Sign in</button>
+					</form>
+				</div>
+			</div>
+	    </div>
+	    <div class="container body-content">
+	    	<div th:replace="${views} :: content">
+		    	<div class="jumbotron">
+				    <h2>Spring Framework</h2>
+				    <p class="lead">Spring Data JPA, Thymeleaf and Mockito</p>
+				</div>
+				
+				<div class="row">
+				    <div class="col-md-12">
+				        <p><a href="user/list">Go to user list &raquo;</a></p>
+				    </div>
+				</div>
+			</div>
+	        <hr />
+	        <footer th:replace="template/footer :: footer">
+	            <p>&copy; 2015 Vu Van Hai</p>
+	        </footer>
+	    </div>
+		<script type="text/javascript" src="../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" src="../../resources/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+		<script type="text/javascript" src="../../resources/bootstrapValidator/js/bootstrapValidator.js" th:src="@{/resources/bootstrapValidator/js/bootstrapValidator.js}"></script>
+		<script type="text/javascript" src="../../resources/js/run_prettify.js" th:src="@{/resources/js/run_prettify.js}"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+	</body>
+</html>

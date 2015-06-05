@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+		<title>Project using Spring Data JPA, Thymeleaf and Mockito - Hai Vu</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}" />
+		
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/css/bootstrap-switch.css" th:href="@{/resources/css/bootstrap-switch.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/bootstrapValidator/css/bootstrapValidator.css" th:href="@{/resources/bootstrapValidator/css/bootstrapValidator.css}" />
+		<link rel="stylesheet" type="text/css" media="all" href="../../resources/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" th:href="@{/resources/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css}" />
+		
+		<script type="text/javascript" src="../../resources/js/jquery-1.9.1.min.js" th:src="@{/resources/js/jquery-1.9.1.min.js}"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.confirm.js" th:src="@{/resources/js/jquery.confirm.js}"></script>
+		<style type="text/css">
+			.errorcolor{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div th:replace="template/header :: header"></div>
+	    <div class="container" role="main" style="margin-top: 50px">
+	    	<div th:replace="${views} :: content"></div>
+	        <hr />
+	        <div th:replace="template/footer :: footer"></div>
+	    </div>
+		<script type="text/javascript" src="../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" src="../../resources/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" th:src="@{/resources/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+		<script type="text/javascript" src="../../resources/bootstrapValidator/js/bootstrapValidator.js" th:src="@{/resources/bootstrapValidator/js/bootstrapValidator.js}"></script>
+		<script type="text/javascript" src="../../resources/js/run_prettify.js" th:src="@{/resources/js/run_prettify.js}"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+	</body>
+</html>

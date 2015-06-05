@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+	</head>
+	<body>
+			<table id="table_user" class="table table-bordered" th:fragment="content">
+				<tr>
+					<th>ID</th>
+					<th>User name</th>
+					<th>Password</th>
+					<th>Full name</th>
+					<th>Date of birth</th>
+					<th>Email</th>
+					<th>Status</th>
+				</tr>
+				<tr th:each="user : ${listUser}">
+					<td th:text="${user.userId}">userId</td>
+					<td th:text="${user.userName}">userName</td>
+					<td th:text="${user.pwd}">pwd</td>
+					<td th:text="${user.fullName}">fullName</td>
+					<td th:text="${user.dateOfBirth}">dateOfBirth</td>
+					<td th:text="${user.email}">email</td>
+					<td th:text="${user.status}">status</td>
+				</tr>
+			</table>
+	</body>
+</html>

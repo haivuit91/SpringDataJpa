@@ -5,14 +5,16 @@
 	id="WebApp_ID" version="3.1">
 
 	<display-name>SpringDataJpa</display-name>
+	
 	<servlet>
 		<servlet-name>spring-data-jpa</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>spring-data-jpa</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>
