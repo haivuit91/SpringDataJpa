@@ -1,12 +1,9 @@
 package com.haivu.spring.jpa.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +18,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public List<User> getAllUser() {
-		return userRepository.findAll();
-	}
-
-	@Override
 	public Page<User> getAllUserAndPagination(Pageable pageable) {
 		return userRepository.findAll(pageable);
-	}
-
-	@Override
-	public Iterable<User> getAllUserAndSort(Sort sort) {
-		return userRepository.findAll(sort);
 	}
 
 	@Override
