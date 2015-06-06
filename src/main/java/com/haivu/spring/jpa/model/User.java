@@ -4,12 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -28,19 +29,21 @@ public class User {
 	private int userId;
 
 	@Column(name = "userName", length = 100)
+	@NotNull(message = "The user name is required and can't be empty")
 	@Size(min = 4, max = 20, message = "The user name must be more than 4 and less than 20 characters long")
 	@Pattern(regexp = "^[a-zA-Z0-9_.]+$", message = "The user name can only consist of alphabetical, number, dot and underscore")
 	private String userName;
 
 	@Column(name = "pwd", length = 100)
+	@NotNull(message = "The password is required and can't be empty")
 	@Size(min = 6, max = 30, message = "The password must be more than 6 and less than 30 characters long")
 	private String pwd;
 
 	@Column(name = "fullName", length = 100)
-	@NotNull(message = "The full name is required and can't be empty")
 	private String fullName;
 
 	@Column(name = "dateOfBirth")
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
 	@Column(name = "email", length = 100)
@@ -49,7 +52,7 @@ public class User {
 	private String email;
 
 	@Column(name = "status", length = 50)
-	@Enumerated(EnumType.STRING)
+	@Enumerated
 	private StatusUser status;
 
 	public User() {

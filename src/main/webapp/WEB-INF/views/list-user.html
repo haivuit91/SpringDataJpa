@@ -12,6 +12,15 @@
 	      	</div>
 			<div class="row">
 		        <div class="col-md-12">
+			        <div class="form-horizontal">
+				        <label style="float: left;">Show</label>
+				        <select class="form-control" id="pageSize" style="width: 100px; float: left;">
+				            <option th:value="5"  th:text="5"></option>
+				            <option th:value="10"  th:text="10"></option>
+				            <option th:value="15"  th:text="15"></option>
+				        </select>
+				    	<label style="float: left;">entries</label>
+			        </div>
 					<table id="table_user" class="table table-bordered">
 						<tr>
 							<th>ID</th>
@@ -28,7 +37,7 @@
 							<td th:text="${user.userName}">userName</td>
 							<td th:text="${user.pwd}">pwd</td>
 							<td th:text="${user.fullName}">fullName</td>
-							<td th:text="${user.dateOfBirth}">dateOfBirth</td>
+							<td th:text="${#calendars.format(user.dateOfBirth,'dd/MM/yyyy')}">dateOfBirth</td>
 							<td th:text="${user.email}">email</td>
 							<td th:text="${user.status}">status</td>
 							<td>
@@ -38,25 +47,19 @@
 						</tr>
 					</table>
 					<!-- Pagination Bar -->
-					<nav>
+					<nav style="text-align: center;">
 					  	<ul class="pagination">
-						    <li th:class="${currentIndex == 1} ? 'disabled' : ''">
-						    	<a href="#" th:if="${currentIndex == 1}" aria-label="Previous">
-							    	<span aria-hidden="true">&laquo;</span>
-							    </a>
-							    <a href="#" th:unless="${currentIndex == 1}" th:href="@{/user/list(page=${currentIndex - 1})}" aria-label="Previous">
+						    <li th:unless="${currentIndex == 1}" >
+							    <a href="#" th:href="@{/user/list(page=${currentIndex - 1})}" aria-label="Previous">
 							    	<span aria-hidden="true">&laquo;</span>
 							    </a>
 						    </li>
-						    <li th:each="i : ${#numbers.sequence(beginIndex, endIndex)}">
-						    	<a href="#" th:if="${currentIndex == i}" class="active" th:text="${i}"></a>
+						    <li th:each="i : ${#numbers.sequence(beginIndex, endIndex)}" th:class="${currentIndex == i} ? active">
+						    	<a href="#" th:if="${currentIndex == i}" th:text="${i}"></a>
 						    	<a href="#" th:unless="${currentIndex == i}" th:href="@{/user/list(page=${i})}" th:text="${i}"></a>
 						    </li>
-						    <li th:class="${currentIndex == listUser.totalPages} ? 'disabled' : ''">
-						      	<a href="#" th:if="${currentIndex == listUser.totalPages}" aria-label="Next">
-						        	<span aria-hidden="true">&raquo;</span>
-						      	</a>
-						      	<a href="#" th:unless="${currentIndex == listUser.totalPages}" th:href="@{/user/list(page=${currentIndex + 1})}" aria-label="Next">
+						    <li th:unless="${currentIndex == listUser.totalPages}" >
+						      	<a href="#" th:href="@{/user/list(page=${currentIndex + 1})}" aria-label="Next">
 						        	<span aria-hidden="true">&raquo;</span>
 						      	</a>
 						    </li>
@@ -71,35 +74,35 @@
 		        <div class="col-md-12">
 					<form id="form-user" class="form-horizontal" th:action="@{/user/save-user}" th:object="${user}" method="post">
 						<input id="userId" type="hidden" th:field="*{userId}" />
-						<div class="form-group">
+						<div class="form-group" th:class="${#fields.hasErrors('userName')} ? 'form-group has-error' : form-group">
 							<label class="col-lg-3 control-label">User name</label>
 							<div class="col-lg-5">
 								<input id="userName" class="form-control" type="text" th:field="*{userName}" required="required" placeholder="User name" />
 								<div class="errorcolor" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" th:class="${#fields.hasErrors('pwd')} ? 'form-group has-error' : form-group">
 							<label class="col-lg-3 control-label">Password</label>
 							<div class="col-lg-5">
 								<input id="pwd" class="form-control" type="password" th:field="*{pwd}" required="required" placeholder="Password" />
 								<div class="errorcolor" th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}">Error</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" th:class="${#fields.hasErrors('fullName')} ? 'form-group has-error' : form-group">
 							<label class="col-lg-3 control-label">Full name</label>
 							<div class="col-lg-5">
 								<input id="fullName" class="form-control" type="text" th:field="*{fullName}" placeholder="Full name" />
 								<div class="errorcolor" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" th:class="${#fields.hasErrors('dateOfBirth')} ? 'form-group has-error' : form-group">
 							<label class="col-lg-3 control-label">Date of birth</label>
 							<div class="col-lg-5">
 								<input id="dateOfBirth" class="form-control" type="text" th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy" />
 								<div class="errorcolor" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" th:class="${#fields.hasErrors('email')} ? 'form-group has-error' : form-group">
 							<label class="col-lg-3 control-label">Email</label>
 							<div class="col-lg-5">
 								<input id="email" class="form-control" type="text" th:field="*{email}" required="required" placeholder="Email" />
@@ -125,7 +128,7 @@
 										var userId = $(button).data("id");
 										$.ajax({
 											type : 'DELETE',
-											url : 'SpringDataJpa/user/del-user/' + userId,
+											url : 'del-user/' + userId,
 // 											data: {userId: userId},
 											success : function(response) {
 												alert(response);
