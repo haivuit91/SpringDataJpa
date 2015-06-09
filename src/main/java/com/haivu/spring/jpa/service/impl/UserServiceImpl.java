@@ -35,19 +35,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User editUser(User user) throws Exception {
-		User edit = userRepository.findOne(user.getUserId());
-		if (edit == null)
-			throw new Exception();
-		return userRepository.save(edit);
+	public User editUser(User user) {
+		// User edit = userRepository.findOne(user.getUserId());
+		return userRepository.save(user);
 	}
 
 	@Override
 	@Transactional
-	public User delUser(int userId) throws Exception {
+	public User delUser(int userId) {
 		User del = userRepository.findOne(userId);
-		if (del == null)
-			throw new Exception();
 		userRepository.delete(del);
 		return del;
 	}

@@ -3,124 +3,148 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" lang="en">
 
-	<head>
-	</head>
-	<body>
-		<div th:fragment="content">
-			<div class="page-header">
-	        	<h1>User list</h1>
-	      	</div>
-			<div class="row">
-		        <div class="col-md-12">
-			        <div class="form-horizontal">
-				        <label style="float: left;">Show</label>
-				        <select class="form-control" id="pageSize" style="width: 100px; float: left;">
-				            <option th:value="5"  th:text="5"></option>
-				            <option th:value="10"  th:text="10"></option>
-				            <option th:value="15"  th:text="15"></option>
-				        </select>
-				    	<label style="float: left;">entries</label>
-			        </div>
-					<table id="table_user" class="table table-bordered">
-						<tr>
-							<th>ID</th>
-							<th>User name</th>
-							<th>Password</th>
-							<th>Full name</th>
-							<th>Date of birth</th>
-							<th>Email</th>
-							<th>Status</th>
-							<th>Action</th>
-						</tr>
-						<tr th:each="user : ${listUser.content}">
-							<td th:text="${user.userId}">userId</td>
-							<td th:text="${user.userName}">userName</td>
-							<td th:text="${user.pwd}">pwd</td>
-							<td th:text="${user.fullName}">fullName</td>
-							<td th:text="${#calendars.format(user.dateOfBirth,'dd/MM/yyyy')}">dateOfBirth</td>
-							<td th:text="${user.email}">email</td>
-							<td th:text="${user.status}">status</td>
-							<td>
-								<a class="btn btn-success" role="button" href="#" th:href="@{'/user/edit-user/' + ${user.userId}}">Edit</a>
-								<button class="btn btn-danger delConfirm" th:attr="data-text='Are you sure you want to delete user ' + ${user.userName} + '?', data-id=${user.userId}">Delete</button>
-							</td>
-						</tr>
-					</table>
-					<!-- Pagination Bar -->
-					<nav style="text-align: center;">
-					  	<ul class="pagination">
-						    <li th:unless="${currentIndex == 1}" >
-							    <a href="#" th:href="@{/user/list(page=${currentIndex - 1})}" aria-label="Previous">
-							    	<span aria-hidden="true">&laquo;</span>
-							    </a>
-						    </li>
-						    <li th:each="i : ${#numbers.sequence(beginIndex, endIndex)}" th:class="${currentIndex == i} ? active">
-						    	<a href="#" th:if="${currentIndex == i}" th:text="${i}"></a>
-						    	<a href="#" th:unless="${currentIndex == i}" th:href="@{/user/list(page=${i})}" th:text="${i}"></a>
-						    </li>
-						    <li th:unless="${currentIndex == listUser.totalPages}" >
-						      	<a href="#" th:href="@{/user/list(page=${currentIndex + 1})}" aria-label="Next">
-						        	<span aria-hidden="true">&raquo;</span>
-						      	</a>
-						    </li>
-					  	</ul>
-					</nav>
+<head>
+</head>
+<body>
+	<div th:fragment="content">
+		<div class="page-header">
+			<h1>User list</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-horizontal">
+					<label style="float: left;">Show</label> <select
+						class="form-control" id="page-size"
+						style="width: 100px; float: left;">
+						<option th:value="5" th:text="5"></option>
+						<option th:value="10" th:text="10"></option>
+						<option th:value="15" th:text="15"></option>
+					</select> <label style="float: left;">entries</label>
 				</div>
+				<table id="table_user" class="table table-bordered">
+					<tr>
+						<th>ID</th>
+						<th>User name</th>
+						<th>Password</th>
+						<th>Full name</th>
+						<th>Date of birth</th>
+						<th>Email</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+					<tr th:each="user : ${listUser.content}">
+						<td th:text="${user.userId}">userId</td>
+						<td th:text="${user.userName}">userName</td>
+						<td th:text="${user.pwd}">pwd</td>
+						<td th:text="${user.fullName}">fullName</td>
+						<td th:text="${#calendars.format(user.dateOfBirth,'dd/MM/yyyy')}">dateOfBirth</td>
+						<td th:text="${user.email}">email</td>
+						<td th:text="${user.status}">status</td>
+						<td><a class="btn btn-success" role="button" href="#"
+							th:href="@{'/user/edit-user/' + ${user.userId}}">Edit</a>
+							<button class="btn btn-danger delConfirm"
+								th:attr="data-text='Are you sure you want to delete user ' + ${user.userName} + '?', data-id=${user.userId}">Delete</button>
+						</td>
+					</tr>
+				</table>
+				<!-- Pagination Bar -->
+				<nav style="text-align: center;">
+					<ul class="pagination" id="go-page">
+						<li th:if="${currentIndex == 1}" class="disabled"><span
+							aria-hidden="true">&laquo;</span></li>
+						<li th:unless="${currentIndex == 1}"><a href="#"
+							th:href="@{/user/list(page=${currentIndex - 1})}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li th:each="i : ${#numbers.sequence(beginIndex, endIndex)}"
+							th:class="${currentIndex == i} ? active"><span
+							th:if="${currentIndex == i}" th:text="${i}"></span> <a href="#"
+							th:href="@{/user/list(page=${i})}"
+							th:unless="${currentIndex == i}" th:text="${i}"></a></li>
+						<li th:if="${currentIndex == listUser.totalPages}"
+							class="disabled"><span aria-hidden="true">&raquo;</span></li>
+						<li th:unless="${currentIndex == listUser.totalPages}"><a
+							href="#" th:href="@{/user/list(page=${currentIndex + 1})}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+				</nav>
 			</div>
-			<div class="page-header">
-	        	<h4>Add user</h4>
-	      	</div>
-			<div class="row">
-		        <div class="col-md-12">
-					<form id="form-user" class="form-horizontal" th:action="@{/user/save-user}" th:object="${user}" method="post">
-						<input id="userId" type="hidden" th:field="*{userId}" />
-						<div class="form-group" th:class="${#fields.hasErrors('userName')} ? 'form-group has-error' : form-group">
-							<label class="col-lg-3 control-label">User name</label>
-							<div class="col-lg-5">
-								<input id="userName" class="form-control" type="text" th:field="*{userName}" required="required" placeholder="User name" />
-								<div class="errorcolor" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Error</div>
-							</div>
+		</div>
+		<div class="page-header">
+			<h4>Add user</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<form id="form-user" class="form-horizontal"
+					th:action="@{/user/save-user}" th:object="${user}" method="post">
+					<input id="userId" type="hidden" th:field="*{userId}" />
+					<div class="form-group"
+						th:class="${#fields.hasErrors('userName')} ? 'form-group has-error' : form-group">
+						<label class="col-lg-3 control-label">User name</label>
+						<div class="col-lg-5">
+							<input id="userName" class="form-control" type="text"
+								th:field="*{userName}" required="required"
+								placeholder="User name" />
+							<div class="errorcolor" th:if="${#fields.hasErrors('userName')}"
+								th:errors="*{userName}">Error</div>
 						</div>
-						<div class="form-group" th:class="${#fields.hasErrors('pwd')} ? 'form-group has-error' : form-group">
-							<label class="col-lg-3 control-label">Password</label>
-							<div class="col-lg-5">
-								<input id="pwd" class="form-control" type="password" th:field="*{pwd}" required="required" placeholder="Password" />
-								<div class="errorcolor" th:if="${#fields.hasErrors('pwd')}" th:errors="*{pwd}">Error</div>
-							</div>
+					</div>
+					<div class="form-group"
+						th:class="${#fields.hasErrors('pwd')} ? 'form-group has-error' : form-group">
+						<label class="col-lg-3 control-label">Password</label>
+						<div class="col-lg-5">
+							<input id="pwd" class="form-control" type="password"
+								th:field="*{pwd}" required="required" placeholder="Password" />
+							<div class="errorcolor" th:if="${#fields.hasErrors('pwd')}"
+								th:errors="*{pwd}">Error</div>
 						</div>
-						<div class="form-group" th:class="${#fields.hasErrors('fullName')} ? 'form-group has-error' : form-group">
-							<label class="col-lg-3 control-label">Full name</label>
-							<div class="col-lg-5">
-								<input id="fullName" class="form-control" type="text" th:field="*{fullName}" placeholder="Full name" />
-								<div class="errorcolor" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
-							</div>
+					</div>
+					<div class="form-group"
+						th:class="${#fields.hasErrors('fullName')} ? 'form-group has-error' : form-group">
+						<label class="col-lg-3 control-label">Full name</label>
+						<div class="col-lg-5">
+							<input id="fullName" class="form-control" type="text"
+								th:field="*{fullName}" placeholder="Full name" />
+							<div class="errorcolor" th:if="${#fields.hasErrors('fullName')}"
+								th:errors="*{fullName}">Error</div>
 						</div>
-						<div class="form-group" th:class="${#fields.hasErrors('dateOfBirth')} ? 'form-group has-error' : form-group">
-							<label class="col-lg-3 control-label">Date of birth</label>
-							<div class="col-lg-5">
-								<input id="dateOfBirth" class="form-control" type="text" th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy" />
-								<div class="errorcolor" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
-							</div>
+					</div>
+					<div class="form-group"
+						th:class="${#fields.hasErrors('dateOfBirth')} ? 'form-group has-error' : form-group">
+						<label class="col-lg-3 control-label">Date of birth</label>
+						<div class="col-lg-5">
+							<input id="dateOfBirth" class="form-control" type="text"
+								th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy" />
+							<div class="errorcolor"
+								th:if="${#fields.hasErrors('dateOfBirth')}"
+								th:errors="*{dateOfBirth}">Error</div>
 						</div>
-						<div class="form-group" th:class="${#fields.hasErrors('email')} ? 'form-group has-error' : form-group">
-							<label class="col-lg-3 control-label">Email</label>
-							<div class="col-lg-5">
-								<input id="email" class="form-control" type="text" th:field="*{email}" required="required" placeholder="Email" />
-								<div class="errorcolor" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
-							</div>
+					</div>
+					<div class="form-group"
+						th:class="${#fields.hasErrors('email')} ? 'form-group has-error' : form-group">
+						<label class="col-lg-3 control-label">Email</label>
+						<div class="col-lg-5">
+							<input id="email" class="form-control" type="text"
+								th:field="*{email}" required="required" placeholder="Email" />
+							<div class="errorcolor" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}">Error</div>
 						</div>
-						<input id="status" type="hidden" th:field="*{status}" value="ENABLE" />
-						<div class="form-group">
-							<div class="col-lg-9 col-lg-offset-3">
-								<input class="btn btn-primary" type="submit" value="Add user" name="Save" />
-								<input class="btn btn-default" type="reset" value="Reset" />
-							</div>
+					</div>
+					<input id="status" type="hidden" th:field="*{status}"
+						value="ENABLE" />
+					<div class="form-group">
+						<div class="col-lg-9 col-lg-offset-3">
+							<input class="btn btn-primary" type="submit" value="Add user"
+								name="Save" /> <input class="btn btn-default" type="reset"
+								value="Reset" />
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
-			
-			<script type="text/javascript">
+		</div>
+
+		<script type="text/javascript">
 				$(".delConfirm")
 						.confirm(
 								{
@@ -145,28 +169,36 @@
 									confirmButton : "Yes",
 									cancelButton : "No",
 									post : true
-								});
-				$('table td input.status:checkbox')
-						.click(
-								function() {
-									var that = this;
-									var check = this.checked;
-									var userId = $(this).val();
-									$
-											.ajax({
-												type : 'POST',
-												url : '${pageContext.request.contextPath}/user/update-status/'
-														+ userId + '/' + check,
-												success : function(response) {
-													alert(response);
-												},
-												error : function(e) {
-													$(that).prop('checked', false);
-													alert('Error: ' + e);
-												}
-											});
-								});
+								});				
+				$(function(){
+					var page = 1;
+					var size = $('#page-size').val();
+					var dataJson = {
+						      "page" : page,
+						      "size" : size
+						   }
+					$.ajax({
+						type: "POST",
+					    contentType : 'application/json; charset=utf-8',
+					    dataType : 'json',
+					    url: "getListUserJson",
+					    data: JSON.stringify(dataJson),
+						success : function(response) {
+							var row=""
+							$.each(response, function(index, item){
+								row += "<tr><td>" + item.userId + "</td><td>" +item.userName + 
+								"</td><td>" +item.pwd + "</td><td>" +item.fullName + 
+								"</td><td>" +item.dateOfBirth + "</td><td>" +item.email + 
+								"</td><td>" +item.status + "</td></tr>";
+							});
+							$("#table-user").html(row);
+						},
+						error : function(e) {
+							alert('Error: ' + e);
+						}
+					});
+				});
 			</script>
-		</div>
-	</body>
+	</div>
+</body>
 </html>

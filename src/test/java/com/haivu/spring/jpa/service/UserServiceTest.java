@@ -70,7 +70,9 @@ public class UserServiceTest {
 
 	@Test
 	public void getAllUserTest() {
-
+		// Page<User> page =
+		// userService.getAllUserAndPagination(Mockito.anyObject());
+		// Assert.assertTrue(page.getContent() != null);
 	}
 
 }

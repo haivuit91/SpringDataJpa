@@ -2,7 +2,6 @@ package com.haivu.spring.jpa.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.haivu.spring.jpa.model.Pagination;
 import com.haivu.spring.jpa.model.User;
 import com.haivu.spring.jpa.service.UserService;
 
@@ -58,13 +61,34 @@ public class UserController {
 		return "common";
 	}
 
-	// ?page=1&size=5&sort=userId,desc
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String getListUser(
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			ModelMap model, User user) {
 		return setView(page, size, model, "list-user");
+	}
+
+	@RequestMapping(value = "list-json", method = RequestMethod.GET)
+	public String getListUserJson(ModelMap model, User user) {
+		model.put("views", "list-user-json");
+		return "common";
+	}
+
+	@RequestMapping(value = "getListUserJson", method = RequestMethod.POST)
+	@ResponseBody
+	public Page<User> goListUser(
+			@RequestBody(required = false) Pagination page, ModelMap model,
+			User user) {
+
+		int pageDefault = (page.getPage() != null) ? page.getPage() - 1 : 0;
+		int sizeDefault = (page.getSize() != null) ? page.getSize() : 5;
+
+		Page<User> userPage = userSv.getAllUserAndPagination(new PageRequest(
+				pageDefault, sizeDefault, new Sort(new Order(Direction.DESC,
+						"userId"))));
+
+		return userPage;
 	}
 
 	@RequestMapping(value = "edit-user/{userId}", method = RequestMethod.GET)
@@ -83,6 +107,9 @@ public class UserController {
 			@RequestParam(value = "size", required = false) Integer size,
 			@Valid User user, BindingResult bindingResult, ModelMap model)
 			throws Exception {
+
+		System.out.println(((ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes()).getRequest());
 
 		int userId = user.getUserId();
 		if (userId != 0) {
