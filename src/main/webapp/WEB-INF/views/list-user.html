@@ -170,34 +170,6 @@
 									cancelButton : "No",
 									post : true
 								});				
-				$(function(){
-					var page = 1;
-					var size = $('#page-size').val();
-					var dataJson = {
-						      "page" : page,
-						      "size" : size
-						   }
-					$.ajax({
-						type: "POST",
-					    contentType : 'application/json; charset=utf-8',
-					    dataType : 'json',
-					    url: "getListUserJson",
-					    data: JSON.stringify(dataJson),
-						success : function(response) {
-							var row=""
-							$.each(response, function(index, item){
-								row += "<tr><td>" + item.userId + "</td><td>" +item.userName + 
-								"</td><td>" +item.pwd + "</td><td>" +item.fullName + 
-								"</td><td>" +item.dateOfBirth + "</td><td>" +item.email + 
-								"</td><td>" +item.status + "</td></tr>";
-							});
-							$("#table-user").html(row);
-						},
-						error : function(e) {
-							alert('Error: ' + e);
-						}
-					});
-				});
 			</script>
 	</div>
 </body>
